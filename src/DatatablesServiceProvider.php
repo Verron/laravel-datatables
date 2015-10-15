@@ -47,14 +47,14 @@ class DatatablesServiceProvider extends ServiceProvider
     {
         $this->app['datatables'] = $this->app->share(
             function ($app) {
-                $request = $app->make(Request::class);
+                $request = $app->make('yajra\Datatables\Request');
 
                 return new Datatables($request);
             }
         );
 
-        $this->commands(DataTablesMakeCommand::class);
-        $this->commands(DataTablesScopeCommand::class);
+        $this->commands('yajra\Datatables\Generators\DataTablesMakeCommand');
+        $this->commands('yajra\Datatables\Generators\DataTablesScopeCommand');
     }
 
     /**
