@@ -437,13 +437,13 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      */
     private function fetchColumnDetails(DataTableColumn $column)
     {
-        return [
+        return array_merge([
             'name' => $column->getName(),
             'data' => $column->getData(),
             'title' => $column->getTitle(),
             'orderable' => $column->isOrderable(),
             'searchable' => $column->isSearchable()
-        ];
+        ], $column->additionalDetails());
     }
 
     /**
