@@ -124,15 +124,16 @@ class QueryBuilderEngine extends BaseEngine implements DataTableEngineContract
      */
     protected function compileColumnQuery($query, $method, $parameters, $column, $keyword)
     {
-        if (method_exists($query, $method)
+        if ($this->query_type == 'eloquent' ) {
+            call_user_func_array(
+                [$query, $method],
+                $parameters
+            );
+        }
+        else if (method_exists($query, $method)
             && count($parameters) <= with(new \ReflectionMethod($query, $method))->getNumberOfParameters()
         ) {
-            if ($this->query_type == 'eloquent' ) {
-                call_user_func_array(
-                    [$query, $method],
-                    $parameters
-                );
-            } else if (Str::contains(Str::lower($method), 'raw')
+            if (Str::contains(Str::lower($method), 'raw')
                 || Str::contains(Str::lower($method), 'exists')
             ) {
                 call_user_func_array(
