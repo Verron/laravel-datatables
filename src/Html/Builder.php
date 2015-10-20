@@ -126,7 +126,44 @@ class Builder
      */
     public function parameterize($attributes = [])
     {
-        return json_encode(new Parameters($attributes));
+        return $this->parseJSFunctions(new Parameters($attributes));
+    }
+
+    private function parseJSFunctions(Parameters $parameters)
+    {
+        $param = $parameters->toArray();
+        list($values, $replace_keys, $nparam) = $this->pullJSFunctions($param);
+
+        return str_replace(array_flatten($replace_keys), array_flatten($values), json_encode($nparam));
+    }
+
+    private function pullJSFunctions(Array $parameters)
+    {
+        $values = array();
+        $replacements = array();
+
+        foreach($parameters as $key => &$value){
+
+            if (is_array($value)) {
+                list($val, $rep, $param) = $this->pullJSFunctions($value);
+
+                if (!empty($val)) {
+                    $values[] = array_flatten($val);
+                    $replacements[] = array_flatten($rep);
+                }
+
+                $value = $param;
+            }
+            else if(is_string($value) && preg_match('/^function\s*\(.*\)\s*{.*}/', $value) === 1){
+                // Store function string.
+                $values[] = $value;
+                // Replace function string in $foo with a 'unique' special key.
+                $value = '%' . uniqid($key.'_') . '%';
+                // Later on, we'll look for the value, and replace it.
+                $replacements[] = '"' . $value . '"';
+            }
+        }
+        return [$values, $replacements, $parameters];
     }
 
     /**
