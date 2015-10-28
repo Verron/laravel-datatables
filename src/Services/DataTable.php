@@ -286,7 +286,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      */
     public function addColumn(DataTableColumn $column)
     {
-        if ($column->isAttachable()) {
+          if ($column->isAttachable()) {
             $this->injectColumn($column);
         }
 
@@ -385,7 +385,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      * @param Column $column
      *
      */
-    protected function appendColumn(Column $column)
+    protected function appendColumn(DatatableColumn $column)
     {
         $this->columns->put($column->getName(), $this->fetchColumnDetails($column));
     }
