@@ -286,7 +286,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      */
     public function addColumn(DataTableColumn $column)
     {
-          if ($column->isAttachable()) {
+        if ($column->isAttachable()) {
             $this->injectColumn($column);
         }
 
@@ -385,7 +385,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      * @param Column $column
      *
      */
-    protected function appendColumn(DatatableColumn $column)
+    protected function appendColumn(DataTableColumn $column)
     {
         $this->columns->put($column->getName(), $this->fetchColumnDetails($column));
     }
@@ -454,6 +454,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      */
     protected function addColumnDetail(Array $column)
     {
+
         if ((array_key_exists('searchable', $column) && ($column['searchable'] == true)) || !array_key_exists('searchable', $column)) {
             if (!array_key_exists('className', $column)) {
                 $column['className'] = 'searchable input';

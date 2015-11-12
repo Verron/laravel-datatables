@@ -125,6 +125,11 @@ class QueryBuilderEngine extends BaseEngine implements DataTableEngineContract
     protected function compileColumnQuery($query, $method, $parameters, $column, $keyword)
     {
         if ($this->query_type == 'eloquent' ) {
+
+            if (str_contains(strtolower($method), 'raw')) {
+                $parameters = $this->parameterize($parameters, $keyword);
+            }
+
             call_user_func_array(
                 [$query, $method],
                 $parameters
