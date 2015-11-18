@@ -16,14 +16,44 @@ abstract class Filter implements DataTableFilter
 {
     public function getSearchText($column_name, BaseEngine $datatable)
     {
+        $column = $this->getSearchColumn($column_name, $datatable);
+
+        if (!is_null($column)) {
+            return "%".$column['search']['value']."%";
+
+        }
+
+        return '';
+    }
+
+    /**
+     * Get the column information from the ajax request
+     *
+     * @param $column_name
+     * @param BaseEngine $datatable
+     * @return null
+     */
+    public function getSearchColumn($column_name, BaseEngine $datatable)
+    {
         $columns = $datatable->request->get('columns');
 
         foreach ($columns as $column) {
             if (array_key_exists("name", $column) && $column['name'] == $column_name) {
-                return "%".$column['search']['value']."%";
+                return $column;
             }
         }
 
-        return '';
+        return null;
+    }
+
+    /**
+     * Get order orientation
+     * 
+     * @param BaseEngine $datatable
+     * @return mixed
+     */
+    public function getOrderOrientation(BaseEngine $datatable)
+    {
+        return $datatable->request->get('order')[0]['dir'];
     }
 }

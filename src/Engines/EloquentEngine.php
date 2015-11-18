@@ -26,4 +26,20 @@ class EloquentEngine extends QueryBuilderEngine implements DataTableEngineContra
         $this->query = $model instanceof Builder ? $model : $model->getQuery();
         $this->init($request, $this->query->getQuery(), 'eloquent');
     }
+
+    /**
+     * Order by an eloquent relationship
+     *
+     * @param string $column
+     * @param $method
+     * @return $this
+     */
+    public function orderRelation($column, $method)
+    {
+        $params = func_get_args();
+
+        $this->columnDef['order'][$column] = ['method' => $method, 'parameters' => array_splice($params, 2)];
+
+        return $this;
+    }
 }
