@@ -48,7 +48,7 @@ abstract class Filter implements DataTableFilter
 
     /**
      * Get order orientation
-     * 
+     *
      * @param BaseEngine $datatable
      * @return mixed
      */

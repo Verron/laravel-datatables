@@ -87,7 +87,27 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      */
     public function ajax()
     {
-        return $this->applyAttachments($this->datatables->of($this->query()))->make(true);
+        return $this->getPreparedDatatables()->make(true);
+    }
+
+    /**
+     * Get the datatables instance after preparation
+     *
+     * @return \yajra\Datatables\Contracts\DataTableEngineContract
+     */
+    protected function getPreparedDatatables()
+    {
+        return $this->applyAttachments($this->getDatatableEngine());
+    }
+
+    /**
+     * Get an instance of the datatable engine
+     *
+     * @return mixed
+     */
+    protected function getDatatableEngine()
+    {
+        return $this->datatables->of($this->query());
     }
 
     /**
