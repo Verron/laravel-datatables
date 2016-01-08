@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) DevelMe LLC 2015
+ * Copyright (c) Global Vendor Link LLC 2015
  * User: verronknowles
  * Date: 10/16/15
  * Time: 1:10 PM

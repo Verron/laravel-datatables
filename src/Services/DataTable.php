@@ -402,12 +402,12 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     /**
      * Append Columns for datatables
      *
-     * @param Column $column
+     * @param DataTableColumn $column
      *
      */
     protected function appendColumn(DataTableColumn $column)
     {
-        $this->columns->put($column->getName(), $this->fetchColumnDetails($column));
+        $this->columns->put($column->getName(), $this->addColumnDetail($this->fetchColumnDetails($column)));
     }
 
     /**
