@@ -47,6 +47,13 @@ interface DataTableColumn extends DataTableEngineAttachment
     public function isAttachable();
 
     /**
+     * Should be exported to other formats
+     *
+     * @return bool
+     */
+    public function isExportable();
+
+    /**
      * Get the sort position
      *
      * @return int

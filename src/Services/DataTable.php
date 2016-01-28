@@ -453,6 +453,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      * Build datatables structure for column
      *
      * @param DataTableColumn $column
+     *
      * @return array
      */
     private function fetchColumnDetails(DataTableColumn $column)
@@ -462,7 +463,8 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
             'data' => $column->getData(),
             'title' => $column->getTitle(),
             'orderable' => $column->isOrderable(),
-            'searchable' => $column->isSearchable()
+            'searchable' => $column->isSearchable(),
+            'exportable' => $column->isExportable()
         ], $column->additionalDetails());
     }
 
